@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # 1. База Данных PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: medical_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: medical_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d medical_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. ML-Микросервис на FastAPI
+  ml-api:
+    build:
+      context: ./ml-service
+      dockerfile: Dockerfile
+    container_name: medtech_fastapi
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Пробрасываем папку внутрь контейнера, 
+      # чтобы изменения в main.py применялись без пересборки образа
+      - ./ml-service:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+  adminer:
+    image: adminer:latest
+    container_name: medical_adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  postgres_data:
+    name: medtech_pg_data
