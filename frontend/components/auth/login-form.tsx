@@ -69,7 +69,7 @@ export function LoginForm() {
 
                 <Button
                     type="submit"
-                    className="w-full hover:cursor-pointer bg-[#1d4ed8] text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-[1px] active:translate-y-0 active:shadow-sm transition-all duration-200"
+                    className="w-full hover:cursor-pointer bg-[#1d4ed8] text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-px active:translate-y-0 active:shadow-sm transition-all duration-200"
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? "Sign In..." : "Sign In"}
