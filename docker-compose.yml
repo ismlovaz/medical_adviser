@@ -46,6 +46,33 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  # 3. Next.js Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medical_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      ml-api:
+        condition: service_started
+    environment:
+      # Use the db container name instead of localhost
+      - DATABASE_URL=postgresql://admin:admin@db:5432/medical_db?schema=public
+      - ML_API_URL=http://ml-api:8000
+      - USE_PYTHON_BACKEND=true
+      # We need GEMINI_API_KEY to be available during build and run. It should be sourced from host env or .env file
+      # Better Auth requires exact url
+      - BETTER_AUTH_URL=http://localhost:3000
+    env_file:
+      - ./frontend/.env
+      - ./frontend/.env.local
+
 volumes:
   postgres_data:
     name: medtech_pg_data

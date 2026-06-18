@@ -169,6 +169,7 @@ export function ScreeningForm() {
                             className="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                         <button
+                            type="button"
                             onClick={handleAutofill}
                             disabled={isAutofilling}
                             className="w-full mt-4 flex justify-center items-center px-4 py-3 bg-slate-900 text-white text-sm font-semibold rounded-xl hover:bg-slate-800 transition-all"
@@ -180,7 +181,7 @@ export function ScreeningForm() {
 
                 {/* Right: The Form with Tabs */}
                 <form 
-                    onSubmit={methods.handleSubmit(onSubmit)} 
+                    onSubmit={(e) => e.preventDefault()} 
                     onKeyDown={handleKeyDown}
                     className="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col min-h-[600px]"
                 >
@@ -215,7 +216,7 @@ export function ScreeningForm() {
                             )}
                             
                             {currentStep === totalSteps ? (
-                                <button type="submit" className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-xl shadow-sm font-semibold flex justify-center items-center">
+                                <button type="button" onClick={methods.handleSubmit(onSubmit)} className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-xl shadow-sm font-semibold flex justify-center items-center">
                                     <Sparkles className="mr-2" size={16} /> {t("btnRun")}
                                 </button>
                             ) : (

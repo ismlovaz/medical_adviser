@@ -1,22 +1,31 @@
-# Берем легкую версию Python 3.10
-FROM python:3.10-slim
+# Smart Medical Advisor - ML Microservice
+FROM python:3.11-slim
 
-# Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
 
-# Сначала копируем ТОЛЬКО requirements.txt
-# Это хитрый трюк для кэширования: если зависимости не менялись, 
-# Docker не будет скачивать их заново при каждом изменении кода.
-COPY requirements.txt .
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем библиотеки
+# Copy requirements first (for Docker layer caching)
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем все остальные файлы (main.py, модель и т.д.)
-COPY . .
+# Copy application code
+COPY src/ ./src/
 
-# Открываем порт 8000
+# Create directories for data and models
+RUN mkdir -p data models
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
+
+# Expose port
 EXPOSE 8000
 
-# Команда для запуска FastAPI сервера
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the application
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

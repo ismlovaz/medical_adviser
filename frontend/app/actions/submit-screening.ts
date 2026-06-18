@@ -23,7 +23,7 @@ export async function submitScreening(
     }
 
     // 1. Analyze risk using the Abstract Analyzer (Gemini/Python)
-    const analysis = await analyzeRisk(data, locale);
+    const analysis = await analyzeRisk(data, mode, locale);
 
     // 2. Save Session Data to DB
     const healthSession = await prisma.healthSession.create({
@@ -66,7 +66,8 @@ export async function submitScreening(
             aiInsights: {
                 riskLevel: analysis.riskLevel,
                 conclusion: analysis.conclusion,
-                recommendations: analysis.recommendations
+                recommendations: analysis.recommendations,
+                shapData: analysis.shapData || null
             }
         }
     });
