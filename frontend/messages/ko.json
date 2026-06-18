@@ -116,7 +116,9 @@
     "lifestyleTitle": "생활 습관",
     "smoking": "흡연",
     "alcohol": "음주",
-    "activity": "신체 활동"
+    "activity": "신체 활동",
+    "yes": "예",
+    "no": "아니오"
   },
   "Clinical": {
     "groupSymptomatology": "증상학",
@@ -145,5 +147,18 @@
     "thal_normal": "정상",
     "thal_fixed_defect": "고정 결손",
     "thal_reversable_defect": "가역적 결손"
+  },
+  "Results": {
+    "title": "심혈관 위험도 평가 결과",
+    "providedData": "제공된 데이터",
+    "editData": "데이터 수정",
+    "clinicalConclusion": "인공지능 임상 소견",
+    "recommendations": "권고사항",
+    "riskLevel": "위험도",
+    "lowRisk": "낮은 위험",
+    "moderateRisk": "중간 위험",
+    "highRisk": "높은 위험",
+    "guestMode": "게스트 모드: 1회의 평가 기회가 남았습니다.",
+    "registerCta": "가입 및 결과 저장"
   }
 }

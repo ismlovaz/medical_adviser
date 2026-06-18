@@ -115,8 +115,10 @@
     "levelHigh": "High",
     "lifestyleTitle": "Lifestyle Habits",
     "smoking": "Smoking",
-    "alcohol": "Alcohol",
-    "activity": "Physical Activity"
+    "alcohol": "Alcohol Intake",
+    "activity": "Physical Activity",
+    "yes": "Yes",
+    "no": "No"
   },
   "Clinical": {
     "groupSymptomatology": "Symptomatology",
@@ -145,5 +147,18 @@
     "thal_normal": "Normal",
     "thal_fixed_defect": "Fixed Defect",
     "thal_reversable_defect": "Reversable Defect"
+  },
+  "Results": {
+    "title": "Cardiovascular Risk Assessment",
+    "providedData": "Provided Data",
+    "editData": "Edit Data",
+    "clinicalConclusion": "AI Clinical Conclusion",
+    "recommendations": "Recommendations",
+    "riskLevel": "Risk Level",
+    "lowRisk": "Low Risk",
+    "moderateRisk": "Moderate Risk",
+    "highRisk": "High Risk",
+    "guestMode": "Guest mode: You have 1 attempt left.",
+    "registerCta": "Register & Save Results"
   }
 }

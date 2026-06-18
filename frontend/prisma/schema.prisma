@@ -102,6 +102,8 @@ model HealthSession {
   exerciseAngina  Boolean? // Стенокардия при нагрузке (true/false)
   oldpeak         Float? // Депрессия ST (число, напр. 1.5)
   stSlope         String? // Up, Flat, Down
+  majorVessels    Int?    // Number of major vessels (0-3)
+  thalassemia     String? // Normal, Fixed Defect, Reversable Defect
 
   // Связь с результатом предсказания
   prediction Prediction?

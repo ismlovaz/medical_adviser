@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSession } from '@/lib/auth-client';
 import { Sparkles, ArrowRight, ArrowLeft } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 import { getAdvancedScreeningSchema, getBasicScreeningSchema, AdvancedScreeningFormValues } from '@/lib/validations/screening';
 import { useLocalStorageSync } from '@/hooks/useLocalStorageSync';
@@ -20,6 +20,7 @@ export function ScreeningForm() {
     const router = useRouter();
     const t = useTranslations("Screening");
     const tVal = useTranslations("Auth.Validation");
+    const locale = useLocale();
     const [activeTab, setActiveTab] = useState<'basic' | 'clinical'>('basic');
     const [currentStep, setCurrentStep] = useState(1);
     const [notes, setNotes] = useState("");
@@ -112,7 +113,22 @@ export function ScreeningForm() {
             router.push("/login?callbackUrl=/");
             return;
         }
-        toast.success(t("toastAnalysisStarted", { type: activeTab === 'basic' ? t('basicTab') : t('clinicalTab') }));
+
+        const loadingToast = toast.loading(t("toastAnalysisStarted", { type: activeTab === 'basic' ? t('basicTab') : t('clinicalTab') }));
+        
+        try {
+            // Server action must be imported at the top, let's just fetch or use the action directly.
+            // Oh wait, I can just use a transition to call it since it's a server action.
+            const { submitScreening } = await import('@/app/actions/submit-screening');
+            const result = await submitScreening(data, activeTab, locale);
+            
+            if (result.success && result.predictionId) {
+                toast.success("Analysis complete!", { id: loadingToast });
+                router.push(`/results/${result.predictionId}`);
+            }
+        } catch (error: any) {
+            toast.error(error.message || "Failed to analyze data", { id: loadingToast });
+        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
