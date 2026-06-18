@@ -51,7 +51,14 @@
       "height_invalid": "Please enter a valid height",
       "weight_invalid": "Please enter a valid weight",
       "bp_invalid": "Please enter a valid blood pressure value",
-      "bp_error": "Please enter valid blood pressure values."
+      "bp_error": "Please enter valid blood pressure values.",
+      "required": "This field is required",
+      "hr_min": "Heart rate must be at least 60",
+      "hr_max": "Heart rate cannot exceed 220",
+      "oldpeak_min": "Value cannot be negative",
+      "oldpeak_max": "Value cannot exceed 10",
+      "vessels_min": "Cannot be less than 0",
+      "vessels_max": "Cannot exceed 3"
     }
   },
   "Dashboard": {
@@ -110,5 +117,33 @@
     "smoking": "Smoking",
     "alcohol": "Alcohol",
     "activity": "Physical Activity"
+  },
+  "Clinical": {
+    "groupSymptomatology": "Symptomatology",
+    "groupEcgStress": "ECG & Stress Test",
+    "groupAngiography": "Angiography & Blood",
+    "chestPainType": "Chest Pain Type",
+    "cp_typical_angina": "Typical Angina",
+    "cp_atypical_angina": "Atypical Angina",
+    "cp_non_anginal": "Non-anginal Pain",
+    "cp_asymptomatic": "Asymptomatic",
+    "exerciseAngina": "Exercise-Induced Angina",
+    "yes": "Yes",
+    "no": "No",
+    "restingECG": "Resting ECG Results",
+    "ecg_normal": "Normal",
+    "ecg_stt_abnormality": "ST-T Wave Abnormality",
+    "ecg_lv_hypertrophy": "Left Ventricular Hypertrophy",
+    "maxHeartRate": "Maximum Heart Rate (bpm)",
+    "oldpeak": "ST Depression (Oldpeak)",
+    "stSlope": "Slope of Peak Exercise ST Segment",
+    "slope_upsloping": "Upsloping",
+    "slope_flat": "Flat",
+    "slope_downsloping": "Downsloping",
+    "majorVessels": "Number of Major Vessels Colored by Fluoroscopy (0-3)",
+    "thalassemia": "Thalassemia",
+    "thal_normal": "Normal",
+    "thal_fixed_defect": "Fixed Defect",
+    "thal_reversable_defect": "Reversable Defect"
   }
 }

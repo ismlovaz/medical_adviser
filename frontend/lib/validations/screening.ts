@@ -41,3 +41,28 @@ export const getBasicScreeningSchema = (t: (key: string) => string = (k) => k) =
 export type BasicScreeningFormValues = z.infer<
     ReturnType<typeof getBasicScreeningSchema>
 >;
+
+export const getAdvancedScreeningSchema = (t: (key: string) => string = (k) => k) => {
+    return getBasicScreeningSchema(t).extend({
+        chestPainType: z.enum(['typical_angina', 'atypical_angina', 'non_anginal', 'asymptomatic'], {
+            message: t('required')
+        }),
+        restingECG: z.enum(['normal', 'stt_abnormality', 'lv_hypertrophy'], {
+            message: t('required')
+        }),
+        maxHeartRate: z.number({ message: t('required') }).min(60, t('hr_min')).max(220, t('hr_max')),
+        exerciseAngina: z.boolean({ message: t('required') }),
+        oldpeak: z.number({ message: t('required') }).min(0, t('oldpeak_min')).max(10, t('oldpeak_max')), // typically ST depression 0-6.2
+        stSlope: z.enum(['upsloping', 'flat', 'downsloping'], {
+            message: t('required')
+        }),
+        majorVessels: z.number({ message: t('required') }).min(0, t('vessels_min')).max(3, t('vessels_max')),
+        thalassemia: z.enum(['normal', 'fixed_defect', 'reversable_defect'], {
+            message: t('required')
+        }),
+    });
+};
+
+export type AdvancedScreeningFormValues = z.infer<
+    ReturnType<typeof getAdvancedScreeningSchema>
+>;

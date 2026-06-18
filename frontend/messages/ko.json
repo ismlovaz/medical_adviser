@@ -51,7 +51,14 @@
       "height_invalid": "유효한 키를 입력해주세요",
       "weight_invalid": "유효한 몸무게를 입력해주세요",
       "bp_invalid": "유효한 혈압 값을 입력해주세요",
-      "bp_error": "유효한 혈압 값을 입력해주세요."
+      "bp_error": "유효한 혈압 값을 입력해주세요.",
+      "required": "이 필드는 필수입니다.",
+      "hr_min": "심박수는 최소 60 이상이어야 합니다.",
+      "hr_max": "심박수는 220을 초과할 수 없습니다.",
+      "oldpeak_min": "값은 0 이상이어야 합니다.",
+      "oldpeak_max": "값은 10을 초과할 수 없습니다.",
+      "vessels_min": "값은 0 이상이어야 합니다.",
+      "vessels_max": "값은 3을 초과할 수 없습니다."
     }
   },
   "Dashboard": {
@@ -110,5 +117,33 @@
     "smoking": "흡연",
     "alcohol": "음주",
     "activity": "신체 활동"
+  },
+  "Clinical": {
+    "groupSymptomatology": "증상학",
+    "groupEcgStress": "심전도 및 부하 검사",
+    "groupAngiography": "혈관 조영술 및 혈액",
+    "chestPainType": "흉통 유형",
+    "cp_typical_angina": "전형적 협심증",
+    "cp_atypical_angina": "비전형적 협심증",
+    "cp_non_anginal": "비협심증성 통증",
+    "cp_asymptomatic": "무증상",
+    "exerciseAngina": "운동 유발성 협심증 여부",
+    "yes": "예",
+    "no": "아니오",
+    "restingECG": "안정시 심전도 결과",
+    "ecg_normal": "정상",
+    "ecg_stt_abnormality": "ST-T파 이상",
+    "ecg_lv_hypertrophy": "좌심실 비대",
+    "maxHeartRate": "최대 심박수 (bpm)",
+    "oldpeak": "운동 유발성 ST 분절 하강 (Oldpeak)",
+    "stSlope": "최대 운동기 ST 분절 기울기",
+    "slope_upsloping": "상향 경사",
+    "slope_flat": "수평 경사",
+    "slope_downsloping": "하향 경사",
+    "majorVessels": "투시 검사로 확인된 주요 혈관 수 (0-3)",
+    "thalassemia": "지중해빈혈",
+    "thal_normal": "정상",
+    "thal_fixed_defect": "고정 결손",
+    "thal_reversable_defect": "가역적 결손"
   }
 }

@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { UseFormReturn } from 'react-hook-form';
-import { BasicScreeningFormValues } from '@/lib/validations/screening';
+import { UseFormReturn, FieldValues } from 'react-hook-form';
 
 const STORAGE_KEY = 'pending_screening_data';
 
-export const useLocalStorageSync = (methods: UseFormReturn<BasicScreeningFormValues>) => {
+export const useLocalStorageSync = <T extends FieldValues>(methods: UseFormReturn<T>) => {
     // Восстановление данных при загрузке
     useEffect(() => {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -19,7 +18,7 @@ export const useLocalStorageSync = (methods: UseFormReturn<BasicScreeningFormVal
     }, [methods]);
 
     // Метод для сохранения перед редиректом
-    const saveToStorage = (data: BasicScreeningFormValues) => {
+    const saveToStorage = (data: T) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     };
 
