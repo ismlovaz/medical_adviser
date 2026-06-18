@@ -166,7 +166,7 @@ export function ScreeningForm() {
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
                             placeholder={t("notesPlaceholder")}
-                            className="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-slate-900 placeholder:text-slate-400"
                         />
                         <button
                             type="button"
