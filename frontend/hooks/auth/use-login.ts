@@ -40,8 +40,9 @@ export const useLogin = () => {
                 return;
             }
 
-            // Успешный вход -> кидаем в рабочую зону
-            router.push("/dashboard");
+            // Успешный вход -> кидаем в рабочую зону или обратно
+            const callbackUrl = new URLSearchParams(window.location.search).get("callbackUrl") || "/dashboard";
+            router.push(callbackUrl);
             await new Promise(() => {}); // Кнопка останется "loading" до размонтирования страницы
 
         } catch (err) {

@@ -14,13 +14,16 @@ export async function generateMetadata() {
     };
 }
 
-export default async function LoginPage() {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
     const session = await auth.api.getSession({
         headers: await headers()
     });
 
+    const params = await searchParams;
+    const callbackUrl = typeof params.callbackUrl === 'string' ? params.callbackUrl : '/dashboard';
+
     if (session) {
-        redirect("/dashboard");
+        redirect(callbackUrl);
     }
 
     const t = await getTranslations('Auth.Login');
@@ -32,7 +35,7 @@ export default async function LoginPage() {
             description={t('description')}
             footerText={t('footerText')}
             footerLinkText={t('footerLink')}
-            footerHref="/register"
+            footerHref={`/register${params.callbackUrl ? `?callbackUrl=${params.callbackUrl}` : ''}`}
         >
             <LoginForm />
         </AuthWrapper>

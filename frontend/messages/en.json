@@ -44,7 +44,14 @@
       "passwordMin8": "Password must be at least 8 characters",
       "passwordRegex": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
       "nameRequired": "Full name is required",
-      "nameMin2": "Name must be at least 2 characters"
+      "nameMin2": "Name must be at least 2 characters",
+      "gender_required": "Gender is required",
+      "age_min": "Age must be at least 18",
+      "age_max": "Age cannot exceed 120",
+      "height_invalid": "Please enter a valid height",
+      "weight_invalid": "Please enter a valid weight",
+      "bp_invalid": "Please enter a valid blood pressure value",
+      "bp_error": "Please enter valid blood pressure values."
     }
   },
   "Dashboard": {
@@ -54,5 +61,54 @@
     "internalId": "Your internal ID:",
     "logout": "Logout",
     "logoutLoading": "Logging out..."
+  },
+  "Landing": {
+    "title": "Assess your heart risks",
+    "subtitle": "Use AI to extract data from notes or fill in the form manually."
+  },
+  "Header": {
+    "logo": "Smart Medical Advisor",
+    "dashboard": "Dashboard",
+    "login": "Log In",
+    "register": "Register",
+    "logout": "Log Out"
+  },
+  "Screening": {
+    "basicTab": "Basic Screening",
+    "clinicalTab": "Clinical Analysis",
+    "clinicalComingSoon": "Clinical Analysis module is coming soon...",
+    "step1Title": "Physiology & Vitals",
+    "step2Title": "Lifestyle & Blood",
+    "stepOf": "Step {step} of 2: ",
+    "clinicalNotes": "Clinical Notes",
+    "notesPlaceholder": "Paste patient notes here...",
+    "autofillBtn": "Autofill with AI",
+    "autofillProcessing": "Processing...",
+    "toastParsing": "AI is parsing notes...",
+    "toastSuccess": "Form populated by AI!",
+    "toastFailed": "Failed to parse notes",
+    "toastLoginRequired": "Please log in to save your results",
+    "toastAnalysisStarted": "{type} analysis started!",
+    "btnBack": "Back",
+    "btnNext": "Next Step",
+    "btnRun": "Run Diagnostics",
+    "genderLabel": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "ageLabel": "Age",
+    "heightLabel": "Height",
+    "weightLabel": "Weight",
+    "bpLabel": "Blood Pressure (mmHg)",
+    "systolic": "Systolic",
+    "diastolic": "Diastolic",
+    "cholesterolLabel": "Cholesterol Level",
+    "glucoseLabel": "Glucose Level",
+    "levelNormal": "Normal",
+    "levelElevated": "Elevated",
+    "levelHigh": "High",
+    "lifestyleTitle": "Lifestyle Habits",
+    "smoking": "Smoking",
+    "alcohol": "Alcohol",
+    "activity": "Physical Activity"
   }
 }

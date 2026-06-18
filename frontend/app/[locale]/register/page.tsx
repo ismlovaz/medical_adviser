@@ -14,14 +14,17 @@ export async function generateMetadata() {
     };
 }
 
-export default async function RegisterPage() {
+export default async function RegisterPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
 
     const session = await auth.api.getSession({
         headers: await headers()
     });
 
+    const params = await searchParams;
+    const callbackUrl = typeof params.callbackUrl === 'string' ? params.callbackUrl : '/dashboard';
+
     if (session) {
-        redirect("/dashboard");
+        redirect(callbackUrl);
     }
 
     const t = await getTranslations('Auth.Register');
@@ -33,7 +36,7 @@ export default async function RegisterPage() {
             description={t('description')}
             footerText={t('footerText')}
             footerLinkText={t('footerLink')}
-            footerHref="/login"
+            footerHref={`/login${params.callbackUrl ? `?callbackUrl=${params.callbackUrl}` : ''}`}
         >
             <RegisterForm />
         </AuthWrapper>

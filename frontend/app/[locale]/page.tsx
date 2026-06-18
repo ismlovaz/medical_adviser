@@ -1,19 +1,23 @@
-import { Button } from "@/components/ui/button"
+import { ScreeningForm } from "@/components/screening/forms/ScreeningForm";
+import { getTranslations } from "next-intl/server";
 
-export default function Page() {
+export default async function Page() {
+  const t = await getTranslations("Landing");
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <div className="min-h-screen bg-slate-50 pt-12 pb-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto space-y-12">
+        <div className="space-y-4 text-center lg:text-left">
+          <h1 className="text-4xl font-extrabold text-slate-900">
+            {t("title")}
+          </h1>
+          <p className="text-lg text-slate-600 max-w-2xl">
+            {t("subtitle")}
+          </p>
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+
+        <ScreeningForm />
       </div>
     </div>
-  )
+  );
 }

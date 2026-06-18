@@ -30,27 +30,19 @@ export const useRegister = () => {
             if (signUpError) {
                 // 1. Проверяем, если ошибка связана с email (пользователь существует)
                 if (signUpError.code === "USER_ALREADY_EXISTS") {
-                    form.setError("email", {
-                        type: "server",
-                        message: tErrors("emailTaken")
-                    });
-                }
-                // 2. Если ошибка с паролем (например, не прошел валидацию сервера)
-                else if (signUpError.code === "WEAK_PASSWORD" || signUpError.code === "INVALID_PASSWORD") {
-                    form.setError("password", {
-                        type: "server",
-                        message: tErrors("weakPassword")
-                    });
-                }
-                // 3. Любая другая непредвиденная ошибка уходит в глобальный алерт
-                else {
+                    form.setError("email", { type: "server", message: tErrors("emailTaken") });
+                } else if (signUpError.code === "WEAK_PASSWORD") {
+                    form.setError("password", { type: "server", message: tErrors("weakPassword") });
+                } else {
                     setGlobalError(tErrors("registrationFailed"));
                 }
                 return;
             }
 
-            router.push("/dashboard");
-            await new Promise(() => {}); // Кнопка останется "loading", предотвращая повторное нажатие
+            // Успешная регистрация -> кидаем в рабочую зону или обратно
+            const callbackUrl = new URLSearchParams(window.location.search).get("callbackUrl") || "/dashboard";
+            router.push(callbackUrl);
+            await new Promise(() => {}); // Оставляем кнопку в состоянии "loading"
 
         } catch (err) {
             setGlobalError(tErrors("unexpectedError"));

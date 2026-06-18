@@ -44,7 +44,14 @@
       "passwordMin8": "비밀번호는 최소 8자 이상이어야 합니다",
       "passwordRegex": "대문자, 소문자, 숫자를 각각 하나 이상 포함해야 합니다",
       "nameRequired": "성명이 필요합니다",
-      "nameMin2": "이름은 최소 2자 이상이어야 합니다"
+      "nameMin2": "이름은 최소 2자 이상이어야 합니다",
+      "gender_required": "성별을 선택해주세요",
+      "age_min": "나이는 18세 이상이어야 합니다",
+      "age_max": "나이는 120세를 초과할 수 없습니다",
+      "height_invalid": "유효한 키를 입력해주세요",
+      "weight_invalid": "유효한 몸무게를 입력해주세요",
+      "bp_invalid": "유효한 혈압 값을 입력해주세요",
+      "bp_error": "유효한 혈압 값을 입력해주세요."
     }
   },
   "Dashboard": {
@@ -54,5 +61,54 @@
     "internalId": "내부 ID:",
     "logout": "로그아웃",
     "logoutLoading": "로그아웃 중..."
+  },
+  "Landing": {
+    "title": "심장 질환 위험도 평가",
+    "subtitle": "AI를 사용하여 진료 기록에서 데이터를 추출하거나 양식을 직접 작성하세요."
+  },
+  "Header": {
+    "logo": "스마트 메디컬 어드바이저",
+    "dashboard": "대시보드",
+    "login": "로그인",
+    "register": "회원가입",
+    "logout": "로그아웃"
+  },
+  "Screening": {
+    "basicTab": "기본 검사",
+    "clinicalTab": "임상 분석",
+    "clinicalComingSoon": "임상 분석 모듈은 준비 중입니다...",
+    "step1Title": "생리학 및 활력 징후",
+    "step2Title": "생활 습관 및 혈액",
+    "stepOf": "2단계 중 {step}단계: ",
+    "clinicalNotes": "임상 기록",
+    "notesPlaceholder": "환자 기록을 여기에 붙여넣으세요...",
+    "autofillBtn": "AI 자동 완성",
+    "autofillProcessing": "처리 중...",
+    "toastParsing": "AI가 기록을 분석 중입니다...",
+    "toastSuccess": "AI에 의해 양식이 채워졌습니다!",
+    "toastFailed": "기록 분석에 실패했습니다",
+    "toastLoginRequired": "결과를 저장하려면 로그인해 주세요",
+    "toastAnalysisStarted": "{type} 분석이 시작되었습니다!",
+    "btnBack": "뒤로",
+    "btnNext": "다음 단계",
+    "btnRun": "진단 실행",
+    "genderLabel": "성별",
+    "male": "남성",
+    "female": "여성",
+    "ageLabel": "나이",
+    "heightLabel": "키",
+    "weightLabel": "몸무게",
+    "bpLabel": "혈압 (mmHg)",
+    "systolic": "수축기",
+    "diastolic": "이완기",
+    "cholesterolLabel": "콜레스테롤 수치",
+    "glucoseLabel": "혈당 수치",
+    "levelNormal": "정상",
+    "levelElevated": "주의",
+    "levelHigh": "높음",
+    "lifestyleTitle": "생활 습관",
+    "smoking": "흡연",
+    "alcohol": "음주",
+    "activity": "신체 활동"
   }
 }

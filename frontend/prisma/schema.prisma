@@ -13,10 +13,6 @@ datasource db {
   provider = "postgresql"
 }
 
-// ==========================================
-// БЛОК 1: BETTER AUTH (Авторизация и сессии)
-// ==========================================
-
 model User {
   id            String   @id @default(cuid())
   name          String?
@@ -28,6 +24,9 @@ model User {
 
   sessions Session[]
   accounts Account[]
+
+  // Связь: один пользователь может пройти много скринингов
+  healthSessions HealthSession[]
 }
 
 model Session {
@@ -67,4 +66,58 @@ model Verification {
   expiresAt  DateTime
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
+}
+
+model HealthSession {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Режим скрининга: "BASIC" или "CLINICAL"
+  mode String
+
+  // === ОБЩИЕ ПОЛЯ (Обязательны для обоих режимов) ===
+  age    Int // Возраст (в годах)
+  gender String // "M" (Male) или "F" (Female) - для унификации
+
+  // === ПОЛЯ РЕЖИМА 1: BASIC LIFESTYLE (Опциональны) ===
+  height           Int? // Рост в см
+  weight           Float? // Вес в кг
+  bloodPressureHi  Int? // Систолическое давление (ap_hi)
+  bloodPressureLo  Int? // Диастолическое давление (ap_lo)
+  cholesterolLevel Int? // Категория: 1 (Норма), 2 (Выше нормы), 3 (Высокий)
+  glucoseLevel     Int? // Категория: 1 (Норма), 2 (Выше нормы), 3 (Высокий)
+  smoke            Boolean?
+  alco             Boolean?
+  active           Boolean? // Занятия спортом
+
+  // === ПОЛЯ РЕЖИМА 2: CLINICAL MEDICAL (Опциональны) ===
+  chestPainType   String? // TA, ATA, NAP, ASY
+  restingBP       Int? // Давление в покое (mm Hg)
+  cholesterolMgDl Float? // Лабораторный холестерин (mm/dl) - точное число!
+  fastingBS       Boolean? // Сахар натощак > 120 (true/false)
+  restingECG      String? // Normal, ST, LVH
+  maxHR           Int? // Максимальный пульс (60-202)
+  exerciseAngina  Boolean? // Стенокардия при нагрузке (true/false)
+  oldpeak         Float? // Депрессия ST (число, напр. 1.5)
+  stSlope         String? // Up, Flat, Down
+
+  // Связь с результатом предсказания
+  prediction Prediction?
+
+  createdAt DateTime @default(now())
+}
+
+model Prediction {
+  id String @id @default(cuid())
+
+  sessionId String        @unique
+  session   HealthSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  riskScore  Float // Вероятность риска (0-100%)
+  topFactors Json? // SHAP-факторы от Python (массив объектов)
+  aiInsights Json? // Сгенерированные советы от Gemini
+
+  createdAt DateTime @default(now())
 }
