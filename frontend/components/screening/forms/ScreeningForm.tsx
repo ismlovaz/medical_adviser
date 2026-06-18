@@ -69,7 +69,8 @@ export function ScreeningForm() {
             methods.setValue('thalassemia', null as any);
         }
         // Force re-validation with new schema if needed, but since fields are hidden, it's fine.
-    }, [activeTab, totalSteps, currentStep, methods]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeTab, totalSteps, currentStep]);
 
     const handleNext = async () => {
         let fieldsToValidate: any[] = [];
@@ -166,6 +167,8 @@ export function ScreeningForm() {
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
                             placeholder={t("notesPlaceholder")}
+                            autoComplete="off"
+                            spellCheck="true"
                             className="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                         <button
