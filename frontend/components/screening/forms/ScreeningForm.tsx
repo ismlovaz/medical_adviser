@@ -52,24 +52,12 @@ export function ScreeningForm() {
 
     const totalSteps = activeTab === 'basic' ? 2 : 5;
 
-    // Reset current step and clear clinical fields if switching to basic
+    // Reset current step if switching tabs causes it to overflow
     useEffect(() => {
         if (currentStep > totalSteps) {
             setCurrentStep(totalSteps);
         }
-        
-        if (activeTab === 'basic') {
-            methods.setValue('chestPainType', null as any);
-            methods.setValue('restingECG', null as any);
-            methods.setValue('maxHeartRate', null as any);
-            methods.setValue('exerciseAngina', null as any);
-            methods.setValue('oldpeak', null as any);
-            methods.setValue('stSlope', null as any);
-            methods.setValue('majorVessels', null as any);
-            methods.setValue('thalassemia', null as any);
-        }
-        // Force re-validation with new schema if needed, but since fields are hidden, it's fine.
-    }, [activeTab, totalSteps, currentStep, methods]);
+    }, [activeTab, totalSteps, currentStep]);
 
     const handleNext = async () => {
         let fieldsToValidate: any[] = [];
@@ -83,8 +71,30 @@ export function ScreeningForm() {
         const isValid = await methods.trigger(fieldsToValidate);
         if (isValid) {
             setCurrentStep(prev => Math.min(prev + 1, totalSteps));
-        } else {
-            console.log("Validation failed for step", currentStep, methods.formState.errors);
+        }
+    };
+
+    const onError = (errors: any) => {
+        const step1Fields = ['gender', 'age', 'height', 'weight', 'bloodPressureHi', 'bloodPressureLo'];
+        const step2Fields = ['cholesterolLevel', 'glucoseLevel', 'smoke', 'alco', 'active'];
+        const step3Fields = ['chestPainType', 'exerciseAngina'];
+        const step4Fields = ['restingECG', 'maxHeartRate', 'oldpeak', 'stSlope'];
+        const step5Fields = ['majorVessels', 'thalassemia'];
+
+        const errorFields = Object.keys(errors);
+        
+        if (errorFields.some(f => step1Fields.includes(f))) {
+            setCurrentStep(1);
+        } else if (errorFields.some(f => step2Fields.includes(f))) {
+            setCurrentStep(2);
+        } else if (activeTab === 'clinical') {
+            if (errorFields.some(f => step3Fields.includes(f))) {
+                setCurrentStep(3);
+            } else if (errorFields.some(f => step4Fields.includes(f))) {
+                setCurrentStep(4);
+            } else if (errorFields.some(f => step5Fields.includes(f))) {
+                setCurrentStep(5);
+            }
         }
     };
 
@@ -96,6 +106,12 @@ export function ScreeningForm() {
             const data = await autofillFromText(notes);
             if (data) {
                 methods.reset(data);
+                
+                // Switch to clinical tab automatically if advanced fields were detected
+                if (data.chestPainType !== null || data.restingECG !== null || data.maxHeartRate !== null || data.oldpeak !== null || data.stSlope !== null || data.majorVessels !== null || data.thalassemia !== null) {
+                    setActiveTab('clinical');
+                }
+                
                 toast.success(t("toastSuccess"));
             }
         } catch (e) {
@@ -117,8 +133,6 @@ export function ScreeningForm() {
         const loadingToast = toast.loading(t("toastAnalysisStarted", { type: activeTab === 'basic' ? t('basicTab') : t('clinicalTab') }));
         
         try {
-            // Server action must be imported at the top, let's just fetch or use the action directly.
-            // Oh wait, I can just use a transition to call it since it's a server action.
             const { submitScreening } = await import('@/app/actions/submit-screening');
             const result = await submitScreening(data, activeTab, locale);
             
@@ -137,7 +151,7 @@ export function ScreeningForm() {
             if (currentStep < totalSteps) {
                 handleNext();
             } else {
-                methods.handleSubmit(onSubmit)();
+                methods.handleSubmit(onSubmit, onError)();
             }
         }
     };
@@ -216,7 +230,7 @@ export function ScreeningForm() {
                             )}
                             
                             {currentStep === totalSteps ? (
-                                <button type="button" onClick={methods.handleSubmit(onSubmit)} className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-xl shadow-sm font-semibold flex justify-center items-center">
+                                <button type="button" onClick={methods.handleSubmit(onSubmit, onError)} className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-xl shadow-sm font-semibold flex justify-center items-center">
                                     <Sparkles className="mr-2" size={16} /> {t("btnRun")}
                                 </button>
                             ) : (
