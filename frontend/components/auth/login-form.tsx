@@ -6,9 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthAlert, AuthDivider, GoogleSignInButton } from "@/components/auth/auth-ui";
 import { AlertCircle } from "lucide-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export function LoginForm() {
+    const t = useTranslations('Auth.Form');
+    const tLogin = useTranslations('Auth.Login');
+    
     const {
         form: { register, formState: { errors }, handleSubmit },
         globalError,
@@ -24,12 +27,12 @@ export function LoginForm() {
                 {/* Поле: Email */}
                 <div className="space-y-2">
                     <Label htmlFor="email" className={errors.email ? "text-red-500" : ""}>
-                        Email
+                        {t("emailLabel")}
                     </Label>
                     <Input
                         id="email"
                         type="email"
-                        placeholder="name@example.com"
+                        placeholder={t("emailPlaceholder")}
                         className={`focus-visible:ring-blue-600 ${errors.email ? "border-red-500" : ""}`}
                         disabled={isSubmitting}
                         {...register("email")}
@@ -43,13 +46,13 @@ export function LoginForm() {
                 <div className="space-y-2">
                     <div className="flex items-center justify-between">
                         <Label htmlFor="password" className={errors.password ? "text-red-500" : ""}>
-                            Password
+                            {t("passwordLabel")}
                         </Label>
                     </div>
                     <Input
                         id="password"
                         type="password"
-                        placeholder="••••••••"
+                        placeholder={t("passwordPlaceholder")}
                         className={`focus-visible:ring-blue-600 ${errors.password ? "border-red-500" : ""}`}
                         disabled={isSubmitting}
                         {...register("password")}
@@ -72,9 +75,12 @@ export function LoginForm() {
                     className="w-full hover:cursor-pointer bg-[#1d4ed8] text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-px active:translate-y-0 active:shadow-sm transition-all duration-200"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? "Sign In..." : "Sign In"}
+                    {isSubmitting ? tLogin("submitButtonLoading") : tLogin("submitButton")}
                 </Button>
             </form>
+
+            <AuthDivider />
+            <GoogleSignInButton onClick={handleGoogleLogin} isLoading={isSubmitting} />
         </div>
     );
 }

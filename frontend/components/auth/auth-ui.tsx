@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // 1. Информационный алерт (зеленый)
 export function AuthAlert({ message }: { message: string }) {
@@ -13,13 +14,14 @@ export function AuthAlert({ message }: { message: string }) {
 
 // 2. Разделитель "or"
 export function AuthDivider() {
+    const t = useTranslations('Auth.UI');
     return (
         <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-slate-200" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-slate-500">or</span>
+                <span className="bg-white px-2 text-slate-500">{t('or')}</span>
             </div>
         </div>
     );
@@ -27,6 +29,7 @@ export function AuthDivider() {
 
 // 3. Кнопка Google
 export function GoogleSignInButton({ onClick, isLoading }: { onClick?: () => void, isLoading?: boolean }) {
+    const t = useTranslations('Auth.UI');
     return (
         <Button
             variant="outline"
@@ -53,7 +56,7 @@ export function GoogleSignInButton({ onClick, isLoading }: { onClick?: () => voi
                     fill="#EA4335"
                 />
             </svg>
-            Continue with Google
+            {t('continueWithGoogle')}
         </Button>
     );
 }

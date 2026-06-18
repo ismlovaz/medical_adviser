@@ -1,29 +1,29 @@
 import { z } from "zod";
 
-export const loginSchema = z.object({
-    email: z.string().min(1, "Email is required").email("Invalid email address"),
+export const getLoginSchema = (t: any) => z.object({
+    email: z.string().min(1, t("emailRequired")).email(t("emailInvalid")),
     password: z
         .string()
-        .min(1, "Password is required")
-        .min(8, "Password must be at least 8 characters"),
+        .min(1, t("passwordRequired"))
+        .min(8, t("passwordMin8")),
 });
 
-export const registerSchema = z.object({
+export const getRegisterSchema = (t: any) => z.object({
     name: z
         .string()
-        .min(1, "Full name is required")
-        .min(2, "Name must be at least 2 characters"),
-    email: z.string().min(1, "Email is required").email("Invalid email address"),
+        .min(1, t("nameRequired"))
+        .min(2, t("nameMin2")),
+    email: z.string().min(1, t("emailRequired")).email(t("emailInvalid")),
     password: z
         .string()
-        .min(1, "Password is required")
-        .min(8, "Password must be at least 8 characters")
+        .min(1, t("passwordRequired"))
+        .min(8, t("passwordMin8"))
         .regex(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-            "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+            t("passwordRegex")
         ),
 });
 
-// Выводим TypeScript типы напрямую из Zod-схем
-export type LoginInput = z.infer<typeof loginSchema>;
-export type RegisterInput = z.infer<typeof registerSchema>;
+// Выводим TypeScript типы из базовых типов (чтобы не дублировать, можем использовать ReturnType)
+export type LoginInput = z.infer<ReturnType<typeof getLoginSchema>>;
+export type RegisterInput = z.infer<ReturnType<typeof getRegisterSchema>>;

@@ -3,6 +3,8 @@ import { auth } from "@/lib/auth"; // Импортируем серверное 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+import { getTranslations } from "next-intl/server";
+
 export default async function DashboardPage() {
     // Сессия уже проверена в layout.tsx, поэтому мы можем быть уверены, что она есть
     const session = await auth.api.getSession({
@@ -12,21 +14,23 @@ export default async function DashboardPage() {
     // Из-за строгой типизации лучше оставить fallback (хотя layout.tsx нас сюда не пустит без сессии)
     if (!session) return null;
 
+    const t = await getTranslations("Dashboard");
+
     // session.user доступен здесь точно так же, как и на клиенте
     return (
         <div className="min-h-screen bg-slate-50 p-8">
             <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h1 className="text-2xl font-bold text-slate-900 mb-4">
-                    Клинический Дашборд
+                    {t("title")}
                 </h1>
                 <p className="text-slate-600">
-                    Добро пожаловать, <span className="font-semibold">{session.user.name}</span>.
+                    {t("welcome")}, <span className="font-semibold">{session.user.name}</span>.
                 </p>
                 <p className="text-sm text-slate-500 mt-2">
-                    Твой рабочий email: {session.user.email}
+                    {t("workEmail")} {session.user.email}
                 </p>
                 <p className="text-sm text-slate-500">
-                    Твой внутренний ID в базе: {session.user.id}
+                    {t("internalId")} {session.user.id}
                 </p>
                 {/* Кнопка выхода */}
                 <div className="mt-6">

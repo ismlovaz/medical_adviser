@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 interface AuthWrapperProps {
     children: ReactNode;
@@ -46,7 +46,7 @@ export function AuthWrapper({
                 <CardFooter className="flex justify-center pb-8">
                     <div className="text-sm text-slate-500">
                         {footerText}{" "}
-                        <Link href={footerHref} className="font-semibold text-blue-600 hover:text-blue-700">
+                        <Link href={footerHref as any} className="font-semibold text-blue-600 hover:text-blue-700">
                             {footerLinkText}
                         </Link>
                     </div>

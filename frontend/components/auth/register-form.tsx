@@ -6,8 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthAlert, AuthDivider, GoogleSignInButton } from "@/components/auth/auth-ui";
 import { AlertCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function RegisterForm() {
+    const t = useTranslations('Auth.Form');
+    const tRegister = useTranslations('Auth.Register');
+
     const {
         form: { register, formState: { errors }, handleSubmit },
         globalError,
@@ -23,11 +27,11 @@ export function RegisterForm() {
                 {/* Поле: Full Name */}
                 <div className="space-y-2">
                     <Label htmlFor="name" className={errors.name ? "text-red-500" : ""}>
-                        Full Name
+                        {t("nameLabel")}
                     </Label>
                     <Input
                         id="name"
-                        placeholder="Dr. Jane Doe"
+                        placeholder={t("namePlaceholder")}
                         className={`focus-visible:ring-blue-600 ${errors.name ? "border-red-500" : ""}`}
                         disabled={isSubmitting}
                         {...register("name")}
@@ -40,12 +44,12 @@ export function RegisterForm() {
                 {/* Поле: Email */}
                 <div className="space-y-2">
                     <Label htmlFor="email" className={errors.email ? "text-red-500" : ""}>
-                        Email
+                        {t("emailLabel")}
                     </Label>
                     <Input
                         id="email"
                         type="email"
-                        placeholder="name@hospital.edu"
+                        placeholder={t("emailPlaceholder")}
                         className={`focus-visible:ring-blue-600 ${errors.email ? "border-red-500" : ""}`}
                         disabled={isSubmitting}
                         {...register("email")}
@@ -58,12 +62,12 @@ export function RegisterForm() {
                 {/* Поле: Password */}
                 <div className="space-y-2">
                     <Label htmlFor="password" className={errors.password ? "text-red-500" : ""}>
-                        Password
+                        {t("passwordLabel")}
                     </Label>
                     <Input
                         id="password"
                         type="password"
-                        placeholder="••••••••"
+                        placeholder={t("passwordPlaceholder")}
                         className={`focus-visible:ring-blue-600 ${errors.password ? "border-red-500" : ""}`}
                         disabled={isSubmitting}
                         {...register("password")}
@@ -86,9 +90,12 @@ export function RegisterForm() {
                     className="w-full hover:cursor-pointer bg-[#1d4ed8] text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-px active:translate-y-0 active:shadow-sm transition-all duration-200"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? "Загрузка..." : "Sign Up"}
+                    {isSubmitting ? tRegister("submitButtonLoading") : tRegister("submitButton")}
                 </Button>
             </form>
+
+            <AuthDivider />
+            <GoogleSignInButton onClick={handleGoogleLogin} isLoading={isSubmitting} />
         </div>
     );
 }

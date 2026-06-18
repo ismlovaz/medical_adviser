@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { signOut } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function LogoutButton() {
     const router = useRouter();
+    const t = useTranslations('Dashboard');
     const [isPending, setIsPending] = useState(false);
 
     const handleSignOut = async () => {
@@ -27,7 +29,7 @@ export function LogoutButton() {
             disabled={isPending}
             className="text-slate-600 hover:text-slate-900"
         >
-            {isPending ? "Выход..." : "Выйти из системы"}
+            {isPending ? t('logoutLoading') : t('logout')}
             {/* Иконка из библиотеки lucide-react (идет в комплекте с shadcn) */}
             {!isPending && <LogOut className="ml-2 h-4 w-4" />}
         </Button>

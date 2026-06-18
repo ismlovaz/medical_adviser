@@ -4,31 +4,34 @@ import { redirect } from "next/navigation";
 import { HeartPulse } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/auth-wrapper";
 import { LoginForm } from "@/components/auth/login-form";
-import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-    title: "Sign In | Smart Medical Advisor",
-    description: "Access your clinical dashboard to review AI cardiac predictions.",
-};
+export async function generateMetadata() {
+    const t = await getTranslations('Auth.Login');
+    return {
+        title: `Sign In | Smart Medical Advisor`,
+        description: t('description')
+    };
+}
 
 export default async function LoginPage() {
-    // Проверка сессии для защиты роута
     const session = await auth.api.getSession({
         headers: await headers()
     });
 
-    // Если пользователь залогинен — не даем ему смотреть на форму входа
     if (session) {
         redirect("/dashboard");
     }
 
+    const t = await getTranslations('Auth.Login');
+
     return (
         <AuthWrapper
             icon={<HeartPulse className="h-6 w-6" />}
-            title="Welcome back"
-            description="Enter your credentials to access your clinical dashboard."
-            footerText="Don't have an account?"
-            footerLinkText="Sign up"
+            title={t('title')}
+            description={t('description')}
+            footerText={t('footerText')}
+            footerLinkText={t('footerLink')}
             footerHref="/register"
         >
             <LoginForm />

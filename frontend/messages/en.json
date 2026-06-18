@@ -1,0 +1,58 @@
+{
+  "Auth": {
+    "UI": {
+      "or": "or",
+      "continueWithGoogle": "Continue with Google"
+    },
+    "Login": {
+      "title": "Welcome back",
+      "description": "Enter your credentials to access your clinical dashboard.",
+      "footerText": "Don't have an account?",
+      "footerLink": "Sign up",
+      "submitButton": "Sign In",
+      "submitButtonLoading": "Signing In..."
+    },
+    "Register": {
+      "title": "Create your account",
+      "description": "Start your journey toward clinical cardiac precision.",
+      "footerText": "Already have an account?",
+      "footerLink": "Sign in",
+      "submitButton": "Sign Up",
+      "submitButtonLoading": "Signing Up..."
+    },
+    "Form": {
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Dr. Jane Doe",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••"
+    },
+    "Errors": {
+      "invalidCredentials": "Invalid email or password.",
+      "loginFailed": "Login failed.",
+      "unexpectedError": "An unexpected error occurred. Please try again.",
+      "googleFailed": "Google sign-in failed.",
+      "emailTaken": "This email is already registered.",
+      "weakPassword": "Invalid password format from server.",
+      "registrationFailed": "Registration failed."
+    },
+    "Validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "passwordRequired": "Password is required",
+      "passwordMin8": "Password must be at least 8 characters",
+      "passwordRegex": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+      "nameRequired": "Full name is required",
+      "nameMin2": "Name must be at least 2 characters"
+    }
+  },
+  "Dashboard": {
+    "title": "Clinical Dashboard",
+    "welcome": "Welcome",
+    "workEmail": "Your work email:",
+    "internalId": "Your internal ID:",
+    "logout": "Logout",
+    "logoutLoading": "Logging out..."
+  }
+}

@@ -1,16 +1,19 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUp, signIn } from "@/lib/auth-client";
-import { registerSchema, type RegisterInput } from "@/lib/validations/auth";
+import { getRegisterSchema, type RegisterInput } from "@/lib/validations/auth";
+import { useTranslations } from "next-intl";
 
 export const useRegister = () => {
     const router = useRouter();
+    const tErrors = useTranslations('Auth.Errors');
+    const tValidation = useTranslations('Auth.Validation');
     const [globalError, setGlobalError] = useState<string | null>(null);
 
     const form = useForm<RegisterInput>({
-        resolver: zodResolver(registerSchema),
+        resolver: zodResolver(getRegisterSchema(tValidation)),
         defaultValues: { name: "", email: "", password: "" },
     });
 
@@ -27,22 +30,21 @@ export const useRegister = () => {
             if (signUpError) {
                 // 1. Проверяем, если ошибка связана с email (пользователь существует)
                 if (signUpError.code === "USER_ALREADY_EXISTS") {
-                    // Бьем ошибкой прямо в поле email
                     form.setError("email", {
                         type: "server",
-                        message: "This email is already registered."
+                        message: tErrors("emailTaken")
                     });
                 }
                 // 2. Если ошибка с паролем (например, не прошел валидацию сервера)
                 else if (signUpError.code === "WEAK_PASSWORD" || signUpError.code === "INVALID_PASSWORD") {
                     form.setError("password", {
                         type: "server",
-                        message: "Invalid password format from server."
+                        message: tErrors("weakPassword")
                     });
                 }
                 // 3. Любая другая непредвиденная ошибка уходит в глобальный алерт
                 else {
-                    setGlobalError(signUpError.message || "Registration failed");
+                    setGlobalError(tErrors("registrationFailed"));
                 }
                 return;
             }
@@ -51,7 +53,7 @@ export const useRegister = () => {
             await new Promise(() => {}); // Кнопка останется "loading", предотвращая повторное нажатие
 
         } catch (err) {
-            setGlobalError("An unexpected error occurred. Please try again.");
+            setGlobalError(tErrors("unexpectedError"));
         }
     };
 
@@ -59,7 +61,7 @@ export const useRegister = () => {
         try {
             await signIn.social({ provider: "google" });
         } catch (err) {
-            setGlobalError("Google sign-in failed.");
+            setGlobalError(tErrors("googleFailed"));
         }
     };
 

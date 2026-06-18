@@ -1,16 +1,19 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "@/lib/auth-client";
-import { loginSchema, type LoginInput } from "@/lib/validations/auth";
+import { getLoginSchema, type LoginInput } from "@/lib/validations/auth";
+import { useTranslations } from "next-intl";
 
 export const useLogin = () => {
     const router = useRouter();
+    const tErrors = useTranslations('Auth.Errors');
+    const tValidation = useTranslations('Auth.Validation');
     const [globalError, setGlobalError] = useState<string | null>(null);
 
     const form = useForm<LoginInput>({
-        resolver: zodResolver(loginSchema),
+        resolver: zodResolver(getLoginSchema(tValidation)),
         defaultValues: {
             email: "",
             password: "",
@@ -30,9 +33,9 @@ export const useLogin = () => {
                 if (signInError.code === "INVALID_EMAIL_OR_PASSWORD") {
                     // Подсвечиваем оба поля, но сообщение выводим только под паролем
                     form.setError("email", { type: "server", message: "" });
-                    form.setError("password", { type: "server", message: "Invalid email or password." });
+                    form.setError("password", { type: "server", message: tErrors("invalidCredentials") });
                 } else {
-                    setGlobalError(signInError.message || "Login failed");
+                    setGlobalError(tErrors("loginFailed"));
                 }
                 return;
             }
@@ -42,7 +45,7 @@ export const useLogin = () => {
             await new Promise(() => {}); // Кнопка останется "loading" до размонтирования страницы
 
         } catch (err) {
-            setGlobalError("An unexpected error occurred. Please try again.");
+            setGlobalError(tErrors("unexpectedError"));
         }
     };
 
@@ -50,7 +53,7 @@ export const useLogin = () => {
         try {
             await signIn.social({ provider: "google" });
         } catch (err) {
-            setGlobalError("Google sign-in failed.");
+            setGlobalError(tErrors("googleFailed"));
         }
     };
 
