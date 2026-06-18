@@ -36,7 +36,7 @@ export function Step1Physiology() {
                             {...register('bloodPressureHi', { valueAsNumber: true })}
                             type="number"
                             placeholder="120"
-                            className="w-full p-4 pt-6 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                            className="w-full p-4 pt-6 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-slate-900 placeholder:text-slate-300"
                         />
                         <span className="absolute top-2 left-4 text-xs text-slate-400 font-medium">{t("systolic")}</span>
                     </div>
@@ -45,7 +45,7 @@ export function Step1Physiology() {
                             {...register('bloodPressureLo', { valueAsNumber: true })}
                             type="number"
                             placeholder="80"
-                            className="w-full p-4 pt-6 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                            className="w-full p-4 pt-6 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-slate-900 placeholder:text-slate-300"
                         />
                         <span className="absolute top-2 left-4 text-xs text-slate-400 font-medium">{t("diastolic")}</span>
                     </div>
